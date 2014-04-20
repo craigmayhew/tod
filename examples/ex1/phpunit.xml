@@ -2,7 +2,7 @@
 <phpunit colors="true">
     <testsuites>
         <testsuite name="TOD NumberTypes Tests">
-            <directory>./NumberNypes/Test/</directory>
+            <directory>./NumberTypes/Test/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

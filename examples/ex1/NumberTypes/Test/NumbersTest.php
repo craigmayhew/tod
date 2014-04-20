@@ -1,27 +1,25 @@
 <?php
 
-namespace tod\examples;
+namespace NumberTypes\Test;
 
-class NumberTypes extends PHPUnit_Framework_TestCase
+class NumbersTest extends \PHPUnit_Framework_TestCase
 {
-    /*
-     * @test
+    /**
+     * @tast
      * @dataProvider providerEven
      */
     public function isEven($i)
     {
-        $stack = array();
         $this->assertEquals(0, $i%2);
     }
     public function providerEven(){
         return array(
-            array(0),
             array(2),
             array(246),
             array(284628)
         );
     }
-    /*
+    /**
      * @test
      * @dataProvider providerOdd
      */
@@ -37,7 +35,7 @@ class NumberTypes extends PHPUnit_Framework_TestCase
             array(2846287)
         );
     }
-    /*
+    /**
      * @test
      * @dataProvider providerPrime
      */
@@ -47,9 +45,9 @@ class NumberTypes extends PHPUnit_Framework_TestCase
     }
     public function providerPrime(){
         return array(
-            array(1),
             array(3),
             array(7),
+            array(13),
             array(29)
         );
     }
