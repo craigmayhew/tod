@@ -14,7 +14,9 @@ class CreateStructureFromTest{
             if(!$fileInfo->isDot()){
                 $file = $testsDir.$fileInfo->getFileName();
                 if($fileInfo->isFile()){
-                    $this->parseFile($file);
+                    $code = $this->parseFile($file);
+                    $this->writeFile($code['fileName'],$code['content']);
+                    unset($code);
                 }elseif($fileInfo->isDir()){
                     $this->createFiles($file);
                 }
@@ -55,16 +57,19 @@ class CreateStructureFromTest{
         
         
         //format class file
-        $code = '<?php class '.$className."\r{\r";
+        $code = '<?php'."\r";
+        $code .= 'namespace NumberTypes;'."\r";
+        $code .= 'class '.$className."\r{\r";
         foreach($classMethods as $method){
             $code .= '    function '.$method->name.'('.$method->arguments.'){'."\r";
             $code .= '        /*greatscott*/'."\r";
             $code .= '    }'."\r";
         }
         
-        file_put_contents($this->outputPath.$className.'.php',$code);
-        
-        return true;
+        return array('fileName'=>$this->outputPath.$className.'.php','content'=>$code);
+    }
+    private function writeFile($file,$code){
+        file_put_contents($file,$code);
     }
 }
 
