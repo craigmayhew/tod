@@ -43,14 +43,15 @@ class GenerateCodeThatPassesTests{
         $classAttempt = implode($aClassTemplate);
         unset($aClassTemplate,$first,$v);
         
-        //save code to disk
-        file_put_contents($file,$classAttempt);
-        
         //is valid PHP?
-        exec('php -l '.$file,$output);
+        exec('echo "'.$classAttempt.'" | php -l',$output);
         //If not
-        if(substr($output[0],0,14) == 'Errors parsing'){
+        if($output[0] != 'No syntax errors detected in -'){
             return $this->generateValidCodeReset($file,$classTemplate);
+        }else{
+            //save code to disk
+            file_put_contents($file,$classAttempt);
+            return true;
         }
         
         //run test against code
