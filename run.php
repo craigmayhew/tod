@@ -30,9 +30,11 @@ if(!is_writeable($argv[2])){
 }
 
 new CreateStructureFromTest($argv[1],$argv[2]);
-//new GenerateCodeThatPassesTests();
+new GenerateCodeThatPassesTests($argv[2]);
 //new SpeedTestCode();
 //new ReplaceProgrammersWithTestAuthors();
 
 //ToDo Handle private/public/protected
 //ToDo Allow function extension
+//ToDo Allow test methods that are just test, don't build class methods from them 
+// (perhaps ALL tests should have Test appended to the method name)
