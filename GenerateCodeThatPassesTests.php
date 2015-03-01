@@ -91,5 +91,10 @@ class GenerateCodeThatPassesTests{
             'funcsMath'=>array('round(','ceil(','floor(')
         );
     }
+    private function generateRandomValidCode(){
+        /*https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y*/
+        array(
+            'T_SCALAR'=>array('a','b','c')
+        );
+    }
 }
-
