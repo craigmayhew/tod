@@ -1,7 +1,9 @@
 tod
 ===
 
-Test Only Development
+Test Only Development. You write the tests. The code writes the code.
+
+DO NOT RUN THIS ON AN ENVIRONMENT YOU CARE ABOUT. RUN THIS INSIDE A DISPOSABLE VM. THERE IS A GOOD POSSIBILITY THE CODE MAY WRITE AND RUN SOMETHING TERRIBLE AT RANDOM. E.G. rm -rf /
 
 
 Install
