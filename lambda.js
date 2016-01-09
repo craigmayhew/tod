@@ -1,54 +1,49 @@
-var util = require('util');
-var vm = require('vm');
+exports.handler = function(event, context) {
 
-var http = require('http');
+  var vm = require('vm');
 
-var lineParts = [
-  '=',
-  '==',
-  '===',
-  '!=',
-  '!==',
-  '+',
-  '-'
-];
-var wholeLines = [
-  'return i;',
-  'i++;',
-  'i--;',
-  'for(i=0;i<10;i++){',
-    
-  '}'
-];
-var lineStart = [
-  '(',
-  'foreach(',
-  'i = ' 
-];
-var lineEnd = [
-  ')}',
-  ')',
-  '}',
-  'i;'
-];
+  var lineParts = [ 
+    '=',
+    '==',
+    '===',
+    '!=',
+    '!==',
+    '+',
+    '-' 
+  ];
+  var wholeLines = [ 
+    'return i;',
+    'i++;',
+    'i--;',
+    'for(i=0;i<10;i++){',
+    '}' 
+  ];
+  var lineStart = [ 
+    '(',
+    'foreach(',
+    'i = ' 
+  ];
+  var lineEnd = [ 
+    ')}',
+    ')',
+    '}',
+    'i;'
+  ];
 
-var Unit = function (js, sandbox) {
-  var context = new vm.createContext(sandbox);
-  var script = new vm.Script(js, {timeout: 10});
-  script.runInNewContext(context);
-  return context.output;
-};
+  var Unit = function (js, sandbox) {
+    var context = new vm.createContext(sandbox);
+    var script = new vm.Script(js, {timeout: 5});
+    script.runInNewContext(context);
+    return context.output;
+  };
 
-var rand = function (low,high){
-  return Math.floor((Math.random() * high) + low);
-}
+  var rand = function (low,high){
+    return Math.floor((Math.random() * high) + low);
+  }
 
-http.createServer(function (request, response) {
-  response.writeHead(200, {'Content-Type': 'text/plain'});
-  
   //options:
-  var sand = {output:null,i:0};
-  var desiredOutput = 8;
+  var sand = {output:null,i:event.input};
+  var desiredOutput = event.desiredOutput;
 
   for(var i2=0;i2<50;i2++){
     var js = [];
@@ -75,25 +70,20 @@ http.createServer(function (request, response) {
     splice.push(' output = ');
     js = splice.concat(js.splice(splice.length-1,rand(0,js.length-1)));
     js = js.join('');
-    
-    response.write('.');
+
     try{
       var test = Unit(js,sand);
-
+      //console.log('\nJS: '+js+'\n OUTPUT: '+test+'\n\n')
+      //console.log(desiredOutput);
       if(desiredOutput == test){
-
-        response.write('\nJS: '+js+'\n OUTPUT: '+test+'\n\n');
+        context.succeed({success:'\nJS: '+js+'\n OUTPUT: '+test+'\n\n'});
       }
-    }
-    catch(err){
+    } catch(err){
       if(err){
         //the code errored so its useless
         //response.write(err.toString());
       }
     }
   }
-  
-  response.end('\n\nAttempts: '+i2);
-}).listen(8124);
-
-console.log('Server running at http://127.0.0.1:8124/');
+  context.done();
+}
