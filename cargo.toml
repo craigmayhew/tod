@@ -1,0 +1,10 @@
+[package]
+name = "tod"
+version = "0.1.1"
+authors = ["Craig Mayhew"]
+
+[dependencies]
+# next 3 needed for reading command line arguements
+docopt = "<1.0.9"
+serde = "1.0" # if you're using `derive(Deserialize)`
+serde_derive = "1.0" # if you're using `derive(Deserialize)`
