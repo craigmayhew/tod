@@ -30,8 +30,8 @@ fn parse_config() -> (docopt::ArgvMap) {
 fn main() -> std::io::Result<()> {
   let args: docopt::ArgvMap = parse_config();
 
-	let answer:i32 = function(args.get_str("<arg1>").parse().unwrap());
+	//INSERT_MAIN_CODE_HERE//
   
-  println!("{}{}","Triple: ", answer.to_string());
+  println!("{}{}","Answer: ", answer.to_string());
   Ok(())
 }
